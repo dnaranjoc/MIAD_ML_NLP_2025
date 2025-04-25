@@ -72,7 +72,7 @@ class PopularityApi(Resource):
             'track_genre': args['track_genre']
         }
 
-        prediction = predict_popularity(input_data)[0]
+        prediction = predict_popularity(input_data)
 
         return {'result': prediction}, 200
 
