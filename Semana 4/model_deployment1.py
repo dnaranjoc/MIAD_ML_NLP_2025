@@ -10,6 +10,7 @@ Original file is located at
 import pandas as pd
 import joblib
 import os
+from catboost import Pool
 
 # Cargar modelo
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'modelo_catboost.pkl')
