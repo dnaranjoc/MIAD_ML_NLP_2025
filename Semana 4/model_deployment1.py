@@ -12,14 +12,11 @@ import joblib
 import os
 
 # Cargar modelo
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'modelo_con_encoder_y_modelo.pkl')
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'modelo_catboost.pkl')
 
 def predict_popularity(input_dict):
-    # Cargar el encoder y el modelo
-    le, model = joblib.load(MODEL_PATH)
-
-    # Codificar el género musical
-    input_dict['track_genre'] = le.transform([input_dict['track_genre']])[0]
+    # Cargar el modelo
+    model = joblib.load(MODEL_PATH)
 
     # Convertir el input_dict en un DataFrame
     X = pd.DataFrame([input_dict])
@@ -31,27 +28,30 @@ def predict_popularity(input_dict):
 
 if __name__ == "__main__":
     # Verificar si se pasan todos los parámetros necesarios
-    if len(sys.argv) < 16:  # Los 15 parámetros + el del script
+    if len(sys.argv) < 19:  # Los 15 parámetros + el del script
         print('Por favor, ingrese todos los parámetros requeridos')
         sys.exit(1)
 
     # Obtener los valores de los parámetros desde la línea de comandos
     input_dict = {
-        'duration_ms': int(sys.argv[1]),
-        'explicit': bool(int(sys.argv[2])),  # Convierte de 0/1 a True/False
-        'danceability': float(sys.argv[3]),
-        'energy': float(sys.argv[4]),
-        'key': int(sys.argv[5]),
-        'loudness': float(sys.argv[6]),
-        'mode': int(sys.argv[7]),
-        'speechiness': float(sys.argv[8]),
-        'acousticness': float(sys.argv[9]),
-        'instrumentalness': float(sys.argv[10]),
-        'liveness': float(sys.argv[11]),
-        'valence': float(sys.argv[12]),
-        'tempo': float(sys.argv[13]),
-        'time_signature': int(sys.argv[14]),
-        'track_genre': sys.argv[15]
+        'artists': sys.argv[1],
+        'album_name': sys.argv[2],
+        'track_name': sys.argv[3],
+        'duration_ms': int(sys.argv[4]),
+        'explicit': bool(int(sys.argv[5])),  # Convierte de 0/1 a True/False
+        'danceability': float(sys.argv[6]),
+        'energy': float(sys.argv[7]),
+        'key': int(sys.argv[8]),
+        'loudness': float(sys.argv[9]),
+        'mode': int(sys.argv[10]),
+        'speechiness': float(sys.argv[11]),
+        'acousticness': float(sys.argv[12]),
+        'instrumentalness': float(sys.argv[13]),
+        'liveness': float(sys.argv[14]),
+        'valence': float(sys.argv[15]),
+        'tempo': float(sys.argv[16]),
+        'time_signature': int(sys.argv[17]),
+        'track_genre': sys.argv[18]
     }
 
     # Llamar a la función de predicción
