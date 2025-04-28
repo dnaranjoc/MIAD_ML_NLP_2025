@@ -21,8 +21,16 @@ def predict_popularity(input_dict):
     # Convertir el input_dict en un DataFrame
     X = pd.DataFrame([input_dict])
 
+    variables_categoricas = ['artists', 'album_name', 'track_name', 'track_genre']
+
+    # Crear un Pool para indicar las columnas categóricas
+    input_pool = Pool(
+        data=X,
+        cat_features=variables_categoricas
+    )
+
     # Predicción usando el modelo
-    prediction = model.predict(X)[0]
+    prediction = model.predict(input_pool)[0]
 
     return float(prediction)
 
